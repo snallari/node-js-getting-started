@@ -5,7 +5,7 @@ var MongoClient = mongodb.MongoClient
 app.use(express.json());
 
 
-app.get('/listUsers', function (req, respo) {
+app.get('/', function (req, respo) {
     console.log("its inside")
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
@@ -151,10 +151,10 @@ app.get('/listUsers', function (req, respo) {
 // })
 
 
-app.get('/', function(req, res){
-    console.log("its inside")
-    res.send({ title: 'Sai' });
-});
+// app.get('/', function(req, res){
+//     console.log("its inside")
+//     res.send({ title: 'Sai' });
+// });
 
 var server = app.listen(process.env.PORT || 8081, function () {
     var host = server.address().address
