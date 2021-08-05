@@ -117,7 +117,7 @@ app.post('/editClasses', function (req, response) {
 })
 
 
-app.get('/getUser', function (req, response) {
+app.get('/filterClass', function (req, response) {
     // First read existing users.
     // fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
     //    var users = JSON.parse( data );
@@ -125,15 +125,15 @@ app.get('/getUser', function (req, response) {
     //    console.log( user );
     //    res.end( JSON.stringify(user));
     // });
-    var url = 'mongodb://localhost:27017/fruits'
+    var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
         if (err) {
             console.log(err)
         } else {
             console.log('Connected to', url)
-            var db = client.db('fruits')
-            var collection = db.collection('apples');
-            collection.find({ "_id":"60d0d6fa34d78b543076dbca"}).toArray(function (err, res) {
+            var db = client.db('students')
+            var collection = db.collection('algebra');
+            collection.find({ "title":"Algebra 1"}).toArray(function (err, res) {
                 if (err) {
                     console.log(err)
                 } else if (res.length) {
