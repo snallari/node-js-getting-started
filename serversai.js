@@ -46,7 +46,7 @@ app.post('/addClasses', function (req, response) {
     //     console.log( data );
     //     res.end( JSON.stringify(data));
     //  });
-    //console.log("Request", req.body)
+    console.log("Request", req.body)
     MongoClient.connect(url, function (err, client) {
         if (err) {
             console.log(err)
@@ -54,14 +54,14 @@ app.post('/addClasses', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            var doc = { title: 'red apples', description: 'red' };
-            var docs = []
-            docs.push(doc)
-            collection.insertMany(docs, function (err, res) {
+            // var doc = { title: 'red apples', description: 'red' };
+            // var docs = []
+            // docs.push(req.body)
+            collection.insertMany(req.body, function (err, res) {
                 if (err) {
                     console.log(err)
                 } else {
-                    console.log("doc inserted", res.insertedCount, res)
+                    console.log("doc inserted", res.insertedCount)
                     response.end(JSON.stringify(res));
                 }
                 client.close();
@@ -91,7 +91,7 @@ app.post('/editClasses', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            collection.updateMany({'title':'red apples'}, {$set: {'title':'Algebra 1'}}, function (err, res) {
+            collection.updateMany(req.body, {$set: {'title':'Algebra 1'}}, function (err, res) {
                 if (err) {
                     console.log(err)
                 } else {
@@ -125,6 +125,7 @@ app.get('/filterClass', function (req, response) {
     //    console.log( user );
     //    res.end( JSON.stringify(user));
     // });
+    console.log(req.body)
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
         if (err) {
@@ -133,7 +134,7 @@ app.get('/filterClass', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            collection.find({ "title":"Algebra 1"}).toArray(function (err, res) {
+            collection.find(req.body).toArray(function (err, res) {
                 if (err) {
                     console.log(err)
                 } else if (res.length) {
