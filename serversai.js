@@ -73,7 +73,7 @@ app.post('/addClasses', function (req, response) {
 })
 
 
-app.post('/editUsers', function (req, response) {
+app.post('/editClasses', function (req, response) {
     console.log(req)
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     // First read existing users.
