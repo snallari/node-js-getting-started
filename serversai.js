@@ -37,7 +37,8 @@ app.get('/listClasses', function (req, respo) {
 })
 
 app.post('/addClasses', function (req, response) {
-    var url = 'mongodb://localhost:27017/fruits'
+    console.log("its inside")
+    var url ='mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     // First read existing users.
     //  fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
     //     data = JSON.parse( data );
@@ -45,7 +46,7 @@ app.post('/addClasses', function (req, response) {
     //     console.log( data );
     //     res.end( JSON.stringify(data));
     //  });
-    console.log("Request", req.body)
+    //console.log("Request", req.body)
     MongoClient.connect(url, function (err, client) {
         if (err) {
             console.log(err)
@@ -53,8 +54,8 @@ app.post('/addClasses', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            var doc = { title:"Algebra tutorial 1",description:"Test 1" };
-            var doc2 = {title:"Algebra tutorial 2",description:"Test 2"  };
+            var doc = { title: 'red apples', description: 'red' };
+            var doc2 = { name: 'green apples', color: 'green' };
             var docs = []
             docs.push(doc)
             collection.insertMany(docs, function (err, res) {
