@@ -91,7 +91,7 @@ app.post('/editClasses', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            collection.updateMany({'title':'red apples'}, {$set: {'description':'Core 3'}}, function (err, res) {
+            collection.updateMany({'title':'red apples'}, {$set: {'Title':'Algebra 1'}}, function (err, res) {
                 if (err) {
                     console.log(err)
                 } else {
