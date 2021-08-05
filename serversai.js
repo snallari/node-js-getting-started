@@ -36,41 +36,41 @@ app.get('/listClasses', function (req, respo) {
     // });
 })
 
-// app.post('/addUsers', function (req, response) {
-//     var url = 'mongodb://localhost:27017/fruits'
-//     // First read existing users.
-//     //  fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-//     //     data = JSON.parse( data );
-//     //     data["user4"] = user["user4"];
-//     //     console.log( data );
-//     //     res.end( JSON.stringify(data));
-//     //  });
-//     console.log("Request", req.body)
-//     MongoClient.connect(url, function (err, client) {
-//         if (err) {
-//             console.log(err)
-//         } else {
-//             console.log('Connected to', url)
-//             var db = client.db('fruits')
-//             var collection = db.collection('apples');
-//             var doc = { name: 'red apples', color: 'red' };
-//             var doc2 = { name: 'green apples', color: 'green' };
-//             var docs = []
-//             docs.push(doc)
-//             collection.insertMany(docs, function (err, res) {
-//                 if (err) {
-//                     console.log(err)
-//                 } else {
-//                     console.log("doc inserted", res.insertedCount, res)
-//                     response.end(JSON.stringify(res));
-//                 }
-//                 client.close();
+app.post('/addClasses', function (req, response) {
+    var url = 'mongodb://localhost:27017/fruits'
+    // First read existing users.
+    //  fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+    //     data = JSON.parse( data );
+    //     data["user4"] = user["user4"];
+    //     console.log( data );
+    //     res.end( JSON.stringify(data));
+    //  });
+    console.log("Request", req.body)
+    MongoClient.connect(url, function (err, client) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Connected to', url)
+            var db = client.db('students')
+            var collection = db.collection('algebra');
+            var doc = { title:"Algebra tutorial 1",description:"Test 1" };
+            var doc2 = {title:"Algebra tutorial 2",description:"Test 2"  };
+            var docs = []
+            docs.push(doc)
+            collection.insertMany(docs, function (err, res) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("doc inserted", res.insertedCount, res)
+                    response.end(JSON.stringify(res));
+                }
+                client.close();
 
-//             });
+            });
 
-//         }
-//     });
-// })
+        }
+    });
+})
 
 
 // app.post('/editUsers', function (req, response) {
