@@ -5,7 +5,7 @@ var MongoClient = mongodb.MongoClient
 app.use(express.json());
 
 
-app.get('/', function (req, respo) {
+app.get('/listClasses', function (req, respo) {
     console.log("its inside")
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
