@@ -10,7 +10,7 @@ app.get('/', function (req, respo) {
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
         if (err) {
-            console.log(err)
+            console.log("error",err)
         } else {
             console.log('Connected to', url)
             var db = client.db('students')
