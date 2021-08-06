@@ -1,7 +1,9 @@
 var express = require('express');
+var cors = require('cors')
 var app = express();
 var mongodb = require('mongodb')
 var MongoClient = mongodb.MongoClient
+app.use(cors())
 app.use(express.json());
 
 
