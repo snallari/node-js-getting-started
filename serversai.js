@@ -2,13 +2,12 @@ var express = require('express');
 var cors = require('cors')
 var app = express();
 var mongodb = require('mongodb')
-app.use(cors())
 app.use(express.json());
 var MongoClient = mongodb.MongoClient
 
 
 
-app.get('/listClasses', function (req, respo) {
+app.get('/listClasses', cors(), function (req, respo) {
     console.log("its inside")
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
@@ -39,7 +38,7 @@ app.get('/listClasses', function (req, respo) {
     // });
 })
 
-app.post('/addClasses', function (req, response) {
+app.post('/addClasses', cors(), function (req, response) {
     console.log("its inside")
     var url ='mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     // First read existing users.
