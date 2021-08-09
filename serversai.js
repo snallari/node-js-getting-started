@@ -36,7 +36,7 @@ app.get('/listClasses', cors(), function (req, respo) {
     //    console.log( data );
     //    res.end( data );
     // });
-})
+});
 
 app.post('/addClasses', cors(), function (req, response) {
     console.log("its inside")
@@ -72,7 +72,7 @@ app.post('/addClasses', cors(), function (req, response) {
 
         }
     });
-})
+});
 
 
 app.post('/editClasses', function (req, response) {
