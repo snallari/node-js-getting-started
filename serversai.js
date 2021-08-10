@@ -66,7 +66,7 @@ app.post('/addClasses',  function (req, response) {
                 } else {
                     console.log("doc inserted", res.insertedCount)
                     if(res.insertedCount == 1){
-                        const body = {'message':'Success'};
+                        const body = 'Success';
     
                         // Calling response.writeHead method
                         response.writeHead(200, {
