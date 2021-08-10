@@ -84,6 +84,9 @@ app.post('/addClasses',  function (req, response) {
                           'Content-Length': Buffer.byteLength(body),
                           'Content-Type': 'text/plain'
                         });
+                        res.write(body)
+                          
+                        response.end();
                     }
                 }
                 client.close();
