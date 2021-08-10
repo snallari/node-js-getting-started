@@ -65,7 +65,25 @@ app.post('/addClasses',  function (req, response) {
                     console.log(err)
                 } else {
                     console.log("doc inserted", res.insertedCount)
-                    response.end(JSON.stringify(res));
+                    if(res.insertedCount == 1){
+                        const body = 'Successfully added a class';
+    
+                        // Calling response.writeHead method
+                        response.writeHead(200, {
+                          'Content-Length': Buffer.byteLength(body),
+                          'Content-Type': 'text/plain'
+                        });
+                          
+                        response.end(body);
+                    }else{
+                        const body = 'Something went wrong';
+    
+                        // Calling response.writeHead method
+                        response.writeHead(400, {
+                          'Content-Length': Buffer.byteLength(body),
+                          'Content-Type': 'text/plain'
+                        });
+                    }
                 }
                 client.close();
 
