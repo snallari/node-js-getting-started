@@ -8,7 +8,7 @@ var MongoClient = mongodb.MongoClient
 app.use(cors())
 app.options('*', cors())
 
-app.get('/listClasses', cors(),  function (req, respo) {
+app.get('/listClasses',   function (req, respo) {
     console.log("its inside")
     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     MongoClient.connect(url, function (err, client) {
