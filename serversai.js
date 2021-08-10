@@ -39,7 +39,7 @@ app.get('/listClasses', cors(),  function (req, respo) {
     // });
 });
 
-app.post('/addClasses', cors(), function (req, response) {
+app.post('/addClasses',  function (req, response) {
     console.log("its inside")
     var url ='mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
     // First read existing users.
