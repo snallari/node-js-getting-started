@@ -73,8 +73,9 @@ app.post('/addClasses',  function (req, response) {
                           'Content-Length': Buffer.byteLength(body),
                           'Content-Type': 'text/plain'
                         });
+                        res.write(body)
                           
-                        response.end(body);
+                        response.end();
                     }else{
                         const body = 'Something went wrong';
     
