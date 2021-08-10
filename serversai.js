@@ -62,19 +62,11 @@ app.post('/addClasses',  function (req, response) {
             // docs.push(req.body)
             collection.insertMany(req.body, function (err, res) {
                 if (err) {
-                    const body = {"err":"Something went wrong"};
-    
-                    // Calling response.writeHead method
-                    response.writeHead(400, {
-                      'Content-Length': Buffer.byteLength(body),
-                      'Content-Type': 'text/plain'
-                    });
-                      
-                    response.end(body);
+                    console.log(err)
                 } else {
                     console.log("doc inserted", res.insertedCount)
                     if(res.insertedCount == 1){
-                        const body = {"message":"Successfully added a class"};
+                        const body = {"message":'Success'};
     
                         // Calling response.writeHead method
                         response.writeHead(200, {
@@ -84,6 +76,7 @@ app.post('/addClasses',  function (req, response) {
                           
                         response.end(body);
                     }
+                    response.end(JSON.stringify(res));
                 }
                 client.close();
 
