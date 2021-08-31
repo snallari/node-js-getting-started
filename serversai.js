@@ -65,17 +65,6 @@ app.post('/addClasses',  function (req, response) {
                     console.log(err)
                 } else {
                     console.log("doc inserted", res.insertedCount)
-                    if(res.insertedCount == 1){
-                        const body = 'Success';
-    
-                        // Calling response.writeHead method
-                        response.writeHead(200, {
-                          'Content-Length': Buffer.byteLength(body),
-                          'Content-Type': 'text/plain'
-                        });
-                          
-                        response.end(body);
-                    }
                     response.end(JSON.stringify(res));
                 }
                 client.close();
@@ -105,12 +94,13 @@ app.post('/editClasses', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            collection.updateMany(req.body, {$set: {'title':'Algebra 1'}}, function (err, res) {
+            console.log("id", req.body.id, req.body)
+            collection.updateMany(req.body._id, {$set: req.body}, function (err, res) {
                 if (err) {
-                    console.log(err)
+                   // console.log(err)
                 } else {
                     console.log("doc inserted", res.insertedCount, res)
-                    //response.end(JSON.stringify(res));
+                    response.end(JSON.stringify(res));
                     collection.find().toArray( function (err, res) {
                         if (err) {
                             console.log(err)
