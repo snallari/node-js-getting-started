@@ -95,7 +95,7 @@ app.post('/editClasses', function (req, response) {
             var db = client.db('students')
             var collection = db.collection('algebra');
             console.log("id", req.body.id, req.body)
-            collection.updateMany(req.body[0]._id, {$set: req.body[0]}, function (err, res) {
+            collection.updateMany(req.body[0].id, {$set: req.body[0]}, function (err, res) {
                 if (err) {
                    // console.log(err)
                 } else {
