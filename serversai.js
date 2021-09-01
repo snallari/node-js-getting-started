@@ -156,10 +156,31 @@ app.get('/filterClass', function (req, response) {
 })
 
 
-// app.get('/', function(req, res){
-//     console.log("its inside")
-//     res.send({ title: 'Sai' });
-// });
+
+app.post('/deletePost', function (req, response) {
+    console.log(req.body)
+    var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
+    MongoClient.connect(url, function (err, client) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Connected to', url)
+            var db = client.db('students')
+            var collection = db.collection('algebra');
+            collection.deleteOne(req.body, function (err, res) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(res)
+                }
+                client.close();
+
+            });
+
+        }
+    });
+})
+
 
 var server = app.listen(process.env.PORT || 8081, function () {
     var host = server.address().address
