@@ -2,10 +2,11 @@ var express = require('express');
 var cors = require('cors')
 var app = express();
 var mongodb = require('mongodb');
-var ObjectId = require('mongodb');
 var mongoose = require('mongoose');
 app.use(express.json());
 var MongoClient = mongodb.MongoClient
+const user = require("./src/routes/user");
+const InitiateMongoServer = require("./src/config/db");
 
 app.use(cors())
 app.options('*', cors())
@@ -103,51 +104,6 @@ app.post('/addClasses',  function (req, response) {
 })
 
 
-// app.post('/editClasses', function (req, response) {
-//    console.log("req",req)
-//     var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
-//     // First read existing users.
-//     //  fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-//     //     data = JSON.parse( data );
-//     //     data["user4"] = user["user4"];
-//     //     console.log( data );
-//     //     res.end( JSON.stringify(data));
-//     //  });
-//     var data={'name':'red apples'}
-//     MongoClient.connect(url, function (err, client) {
-//         if (err) {
-//            // console.log(err)
-//         } else {
-//             console.log('Connected to', url)
-//             var db = client.db('students')
-//             var collection = db.collection('algebra');
-//             var myquery = { _id: req.body[0]._id };
-//             var newvalues = { $set: req.body[0]  };
-//             collection.updateMany(myquery, newvalues, function (err, res) {
-//                 if (err) {
-//                    // console.log(err)
-//                 } else {
-//                     console.log("doc inserted", res.insertedCount, res)
-//                     response.end(JSON.stringify(res));
-//                     collection.find().toArray( function (err, res) {
-//                         if (err) {
-//                       //      console.log(err)
-//                         } else {
-//                        //     console.log("doc inserted", res.insertedCount, res)
-//                             response.end(JSON.stringify(res));
-//                         }
-        
-//                     });
-        
-//                 }
-//                 client.close();
-
-//             });
-          
-//         }
-//     });
-// })
-
 
 app.get('/filterClass', function (req, response) {
     // First read existing users.
@@ -166,7 +122,7 @@ app.get('/filterClass', function (req, response) {
             console.log('Connected to', url)
             var db = client.db('students')
             var collection = db.collection('algebra');
-            collection.find(req.body).toArray(function (err, res) {
+            collection.find({"title":"Sami Thathu"}).toArray(function (err, res) {
                 if (err) {
                     console.log(err)
                 } else if (res.length) {
@@ -213,6 +169,12 @@ app.post('/deletePost', function (req, response) {
         }
     });
 })
+
+app.get("/", (req, res) => {
+    res.json({ message: "API Working" });
+  });
+
+app.use("/user", user);
 
 
 var server = app.listen(process.env.PORT || 8081, function () {
