@@ -104,6 +104,60 @@ app.post('/addClasses',  function (req, response) {
 })
 
 
+app.post('/addFav',  function (req, response) {
+    var url ='mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
+    MongoClient.connect(url, function (err, client) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('Connected to', url)
+            console.log("its inside", req.body)
+            var db = client.db('students')
+            var collection = db.collection('algebra');
+            // var doc = { title: 'red apples', description: 'red' };
+            // var docs = []
+            // docs.push(req.body)
+            // if ((req.body && req.body._id === undefined)) {
+            //   collection.insertOne(req.body, function (err, res) {
+            //     if (err) {
+            //       console.log(err);
+            //     } else {
+            //       console.log("doc insert", res.insertedCount);
+            //       response.end(JSON.stringify(res));
+            //     }
+            //     client.close();
+            //   });
+            // } else {
+            console.log('Connected to update sai', req.body)
+              var myquery = { _id: mongoose.Types.ObjectId("615238463de756ac8ef545a9")};
+              var query=req;
+              delete query.body._id;
+              var newvalues = { $set: {'isFav':true}};
+              console.log(myquery, newvalues)
+              collection.updateMany(myquery, newvalues, function (err, res) {
+                if (err) {
+                  // console.log(err)
+                } else {
+                  console.log("doc updated", res);
+                  response.end(JSON.stringify(res));
+                  collection.find().toArray(function (err, res) {
+                    if (err) {
+                      //      console.log(err)
+                    } else {
+                      //     console.log("doc inserted", res.insertedCount, res)
+                      response.end(JSON.stringify(res));
+                    }
+                  });
+                }
+                client.close();
+              });
+          //  }
+
+        }
+    });
+})
+
+
 
 app.get('/filterClass', function (req, response) {
     // First read existing users.
