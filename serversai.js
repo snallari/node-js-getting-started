@@ -128,10 +128,10 @@ app.post('/addFav', function (req, response) {
       //     client.close();
       //   });
       // } else {
-      var myquery = { _id: mongoose.Types.ObjectId("615238463de756ac8ef545a9") };
+      var myquery = { _id: mongoose.Types.ObjectId(req.body._id) };
       var query = req;
       delete query.body._id;
-      var newvalues = { $set: { 'isFav': true } };
+      var newvalues = { $set: query.body};
       console.log(myquery, newvalues)
       collection.updateMany(myquery, newvalues, function (err, res) {
         if (err) {
