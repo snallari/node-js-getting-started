@@ -9,6 +9,7 @@ app.use(express.json());
 var MongoClient = mongodb.MongoClient
 const user = require("./src/routes/user");
 const InitiateMongoServer = require("./src/config/db");
+const e = require('express');
 
 app.use(cors())
 app.options('*', cors())
@@ -38,10 +39,22 @@ app.get('/listClasses', function (req, respo) {
 
     }
   });
+  // fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+  //    console.log( data );
+  //    res.end( data );
+  // });
 });
 
 app.post('/addClasses', function (req, response) {
   var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
+  // First read existing users.
+  //  fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+  //     data = JSON.parse( data );
+  //     data["user4"] = user["user4"];
+  //     console.log( data );
+  //     res.end( JSON.stringify(data));
+  //  });
+  //  console.log("Request", req.body[0].id)
   MongoClient.connect(url, function (err, client) {
     if (err) {
       console.log(err)
@@ -50,10 +63,13 @@ app.post('/addClasses', function (req, response) {
       console.log("its inside", req.body)
       var db = client.db('students')
       var collection = db.collection('algebra');
+      // var doc = { title: 'red apples', description: 'red' };
+      // var docs = []
+      // docs.push(req.body)
       if ((req.body && req.body._id === undefined)) {
         collection.insertOne(req.body, function (err, res) {
           if (err) {
-            response.end(JSON.stringify(err));
+            console.log(err);
           } else {
             console.log("doc insert", res.insertedCount);
             response.end(JSON.stringify(res));
@@ -69,14 +85,15 @@ app.post('/addClasses', function (req, response) {
         console.log(myquery, newvalues)
         collection.updateOne(myquery, newvalues, function (err, res) {
           if (err) {
-            response.end(JSON.stringify(err));
+            // console.log(err)
           } else {
             console.log("doc updated", res);
             response.end(JSON.stringify(res));
             collection.find().toArray(function (err, res) {
               if (err) {
-                response.end(JSON.stringify(err));
+                //      console.log(err)
               } else {
+                //     console.log("doc inserted", res.insertedCount, res)
                 response.end(JSON.stringify(res));
               }
             });
@@ -100,6 +117,20 @@ app.post('/addFav', function (req, response) {
       console.log("its inside", req.body)
       var db = client.db('students')
       var collection = db.collection('algebra');
+      // var doc = { title: 'red apples', description: 'red' };
+      // var docs = []
+      // docs.push(req.body)
+      // if ((req.body && req.body._id === undefined)) {
+      //   collection.insertOne(req.body, function (err, res) {
+      //     if (err) {
+      //       console.log(err);
+      //     } else {
+      //       console.log("doc insert", res.insertedCount);
+      //       response.end(JSON.stringify(res));
+      //     }
+      //     client.close();
+      //   });
+      // } else {
       var myquery = { _id: mongoose.Types.ObjectId(req.body._id) };
       var query = req;
       delete query.body._id;
@@ -107,20 +138,22 @@ app.post('/addFav', function (req, response) {
       console.log(myquery, newvalues)
       collection.updateMany(myquery, newvalues, function (err, res) {
         if (err) {
-          response.end(JSON.stringify(err));
+          // console.log(err)
         } else {
           console.log("doc updated", res);
           response.end(JSON.stringify(res));
           collection.find().toArray(function (err, res) {
             if (err) {
-              response.end(JSON.stringify(err));
+              //      console.log(err)
             } else {
+              //     console.log("doc inserted", res.insertedCount, res)
               response.end(JSON.stringify(res));
             }
           });
         }
         client.close();
       });
+      //  }
 
     }
   });
@@ -129,6 +162,13 @@ app.post('/addFav', function (req, response) {
 
 
 app.post('/filterClass', function (req, response) {
+  // First read existing users.
+  // fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+  //    var users = JSON.parse( data );
+  //    var user = users["user" + req.params.id] 
+  //    console.log( user );
+  //    res.end( JSON.stringify(user));
+  // });
   console.log(req.body)
   var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
   MongoClient.connect(url, function (err, client) {
@@ -138,52 +178,20 @@ app.post('/filterClass', function (req, response) {
       console.log('Connected to', url)
       var db = client.db('students')
       var collection = db.collection('algebra');
-      delete query.body._id;
-      var newvalues = { $set: query.body };
-      collection.findOne(newvalues).toArray(function (err, res) {
-        if (err) {
-          response.end(JSON.stringify(res));
-        } else if (res.length) {
-          console.log("doc find", res)
-          response.end(JSON.stringify(res));
-        } else {
-          console.log('No Matches Found')
-        }
-        client.close();
-
-      });
-
-    }
-  });
-})
-
-
-
-
-app.post('/login', function (req, response) {
-  console.log(req.body)
-  var url = 'mongodb+srv://snallari:Sairam90@cluster0.iqgwh.mongodb.net/test'
-  MongoClient.connect(url, function (err, client) {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log('Connected to', url)
-      var db = client.db('students')
-      var collection = db.collection('algebra');
-      collection.findOne({"email":req.body.email} ,function (err, res) {
+      collection.findSome({"email":req.body.email, "password":req.body.password}, function (err, res) {
         if (err) {
           response.end(JSON.stringify(err));
         } else {
           if (res === undefined) {
             console.log(err)
           } else {
-            // console.log("doc find", res)
+            console.log("doc find", res)
             // response.end(JSON.stringify(res));
             jwt.sign({
               data: req.body
             }, 'secret', { expiresIn: '1h' }, function (err, token) {
-              var data2 = {
-                'accessToken': token
+              var data2={
+                'accessToken':token
               }
               console.log("saidata", data2)
               response.end(JSON.stringify(data2));
@@ -198,6 +206,8 @@ app.post('/login', function (req, response) {
     }
   });
 })
+
+
 
 app.post('/deletePost', function (req, response) {
   console.log(req.body)
