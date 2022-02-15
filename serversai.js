@@ -138,9 +138,8 @@ app.post('/filterClass', function (req, response) {
       console.log('Connected to', url)
       var db = client.db('students')
       var collection = db.collection('algebra');
-      delete query.body._id;
-      var newvalues = { $set: query.body };
-      collection.findOne(newvalues).toArray(function (err, res) {
+      var newvalues = { $set: req.body };
+      collection.findOne({"email":req.body.email}, function (err, res) {
         if (err) {
           response.end(JSON.stringify(res));
         } else if (res.length) {
